@@ -13,20 +13,20 @@ const s3Client = new S3Client({
   },
 });
 
-const getObjectURL = async (filename) => {
+const getObjectURL = async (fileId) => {
   const command = new GetObjectCommand({
     Bucket: process.env.S3_BUCKET_NAME,
-    Key: `uploads/user-uploads/${filename}`,
+    Key: `uploads/user-uploads/${fileId}`,
+    ResponseContentDisposition: "attachment",
   });
   const url = await getSignedUrl(s3Client, command);
   return url;
 };
 
-const putObjectURL = async (filename, contentType) => {
+const putObjectURL = async (fileId) => {
   const command = new PutObjectCommand({
     Bucket: process.env.S3_BUCKET_NAME,
-    Key: `uploads/user-uploads/${filename}`,
-    ContentType: contentType,
+    Key: `uploads/user-uploads/${fileId}`,
   });
 
   const url = await getSignedUrl(s3Client, command);

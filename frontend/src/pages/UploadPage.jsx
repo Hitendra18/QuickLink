@@ -33,7 +33,6 @@ const UploadPage = () => {
     // step 3: get presigned url from server to upload
     const { url, fileId } = await getUploadURL({
       fileSize: selectedFile.fileSize,
-      contentType: selectedFile.fileType,
       fileExt: selectedFile.fileExt,
     });
 
@@ -42,6 +41,7 @@ const UploadPage = () => {
     const response = await uploadToAWS({
       uploadURL: url,
       file: selectedFile.file,
+      type: selectedFile.fileType,
       onUploadProgress: (progressEvent) => {
         const progress = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total

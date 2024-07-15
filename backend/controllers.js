@@ -15,7 +15,7 @@ const getFile = async (req, res) => {
     const file = result.rows[0];
     const filename = `${file.id}.${file.file_ext}`;
 
-    const url = await getObjectURL(filename);
+    const url = await getObjectURL(fileId);
     if (!url) {
       return res.status(404).json({ error: "File not found" });
     }
@@ -28,16 +28,15 @@ const getFile = async (req, res) => {
 
 const uploadFile = async (req, res) => {
   try {
-    const { fileSize, contentType, fileExt } = req.body;
+    const { fileSize, fileExt } = req.body;
 
-    if (!fileSize || !contentType || !fileExt) {
+    if (!fileSize || !fileExt) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
     const id = randomUUID();
-    const filename = `${id}.${fileExt}`;
 
-    const url = await putObjectURL(filename, contentType);
+    const url = await putObjectURL(id);
     if (!url) {
       return res.status(500).json({ error: "Couldn't generate url" });
     }

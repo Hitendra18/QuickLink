@@ -5,11 +5,10 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
 });
 
-export const getUploadURL = async ({ fileSize, contentType, fileExt }) => {
+export const getUploadURL = async ({ fileSize, fileExt }) => {
   try {
     const { data } = await axiosInstance.post("/api/upload-file", {
       fileSize,
-      contentType,
       fileExt,
     });
     return data;
@@ -28,7 +27,7 @@ export const getDownloadURL = async ({ fileId }) => {
   }
 };
 
-export const uploadToAWS = async ({ uploadURL, file, onUploadProgress }) => {
+export const uploadToAWS = async ({ uploadURL, file, type, onUploadProgress }) => {
   try {
     let config = {
       method: "PUT",
@@ -36,6 +35,9 @@ export const uploadToAWS = async ({ uploadURL, file, onUploadProgress }) => {
       url: uploadURL,
       data: file,
       onUploadProgress,
+      headers: { 
+        'Content-Type': type
+      },
     };
 
     const response = await axios.request(config);
