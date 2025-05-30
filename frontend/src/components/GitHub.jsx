@@ -6,7 +6,7 @@ const GitHub = () => {
       <div className="mb-2 text-[#bfbcd1] flex gap-1">
         <p>See my other projects as well.</p>
         <a
-          href="https://github.com/Hitendra18"
+          href="https://github.com/hitendra4l"
           className="font-bold flex items-center gap-1 text-white"
         >
           <p>GitHub</p>
